@@ -1,16 +1,15 @@
-﻿using System;
-
-namespace DebugConsole
+﻿namespace DebugConsole
 {
     class Program
     {
         static void Main(string[] args)
         {
-            
-            Console.Write("Please enter your name: ");
-            string name = Console.ReadLine();
+            // set up prefixes
+            string[] prefixes = new string[1];
+            prefixes[0] = "http://localhost:8080/";
 
-            Console.WriteLine("Your name is: " + name);
+            // create new listener
+            Listener listener = new Listener(prefixes);
         }
     }
 }
