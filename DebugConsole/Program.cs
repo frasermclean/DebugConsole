@@ -1,15 +1,44 @@
-﻿namespace DebugConsole
+﻿using System;
+
+
+namespace DebugConsole
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            // set up prefixes
-            string[] prefixes = new string[1];
-            prefixes[0] = "http://localhost:8080/";
+            SetupConsole();
+            int port = ProcessArguments(args);
+            Listener listener = new Listener(port);
+        }
 
-            // create new listener
-            Listener listener = new Listener(prefixes);
+        static void SetupConsole()
+        {
+            Console.Title = "DebugConsole";
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("DebugConsole running.");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        static int ProcessArguments(string[] args)
+        {
+            try
+            {
+                int port;
+                if (args.Length >= 1)
+                    port = int.Parse(args[0]);
+                else
+                    port = Listener.PortDefault;
+
+                return port;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ProcessArguments() exception caught: " + ex.Message);
+                return Listener.PortDefault;
+            }
         }
     }
 }
