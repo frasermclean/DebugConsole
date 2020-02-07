@@ -7,6 +7,7 @@ namespace DebugConsole
     class Listener
     {
         public const int PortDefault = 5000;
+        const int BufferSize = 4096;
 
         public Listener(int port)
         {
@@ -20,7 +21,7 @@ namespace DebugConsole
                 server.Start();
 
                 // buffer for storing incoming data
-                byte[] bytes = new byte[256];
+                byte[] receiveBuffer = new byte[BufferSize];
 
                 // main loop
                 while (true)
@@ -37,10 +38,10 @@ namespace DebugConsole
                     int i;
 
                     // Loop to receive all the data sent by the client.
-                    while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                    while ((i = stream.Read(receiveBuffer, 0, receiveBuffer.Length)) != 0)
                     {
                         // get received string
-                        string receivedString = System.Text.Encoding.ASCII.GetString(bytes, 0, i).Trim();
+                        string receivedString = System.Text.Encoding.ASCII.GetString(receiveBuffer, 0, i).Trim();
                         if (receivedString.Trim().Length == 0)
                             continue;
                         Console.WriteLine("Received {0} bytes: \"{1}\"", i, receivedString);
