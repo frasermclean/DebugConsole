@@ -15,7 +15,7 @@ namespace DebugConsole
         static void SetupConsole()
         {
             Console.Title = "DebugConsole";
-            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("DebugConsole running.");

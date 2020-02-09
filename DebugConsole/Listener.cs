@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Collections.Generic;
 
 namespace DebugConsole
 {
@@ -30,8 +31,6 @@ namespace DebugConsole
                     TcpClient client = server.AcceptTcpClient(); // blocking call
                     Console.WriteLine("Accepted connection from: " + client.Client.RemoteEndPoint.ToString());
 
-                    
-
                     // Get a stream object for reading and writing
                     NetworkStream stream = client.GetStream();
 
@@ -42,18 +41,35 @@ namespace DebugConsole
                     {
                         // get received string
                         string receivedString = System.Text.Encoding.ASCII.GetString(receiveBuffer, 0, i).Trim();
-                        if (receivedString.Trim().Length == 0)
-                            continue;
-                        Console.WriteLine("Received {0} bytes: \"{1}\"", i, receivedString);
+                        //Console.WriteLine(receivedString);
 
-                        // generate response
-                        DebugMessage responseMessage = new DebugMessage(0, "OK");
-                        string responseString = responseMessage.EncodeToJson();
-                        responseString =  responseString + "\r\n"; // append carriage return and newline
-                        
-                        byte[] responseBytes = System.Text.Encoding.ASCII.GetBytes(responseString);
-                        stream.Write(responseBytes, 0, responseBytes.Length);
-                        Console.WriteLine("Sent: {0}", responseString);
+                        foreach (string jsonString in GetJsonStrings(receivedString))
+                        {
+                            DebugConsoleMessage receivedMessage = DebugConsoleMessage.DecodeFromJson(jsonString);
+                            if (receivedMessage != null)
+                            {
+                                // set foreground colour based on message type
+                                switch (receivedMessage.MessageType)
+                                {
+                                    case MessageType.None: Console.ForegroundColor = ConsoleColor.White; break;
+                                    case MessageType.Info: Console.ForegroundColor = ConsoleColor.Green; break;
+                                    case MessageType.Warning: Console.ForegroundColor = ConsoleColor.Yellow; break;
+                                    case MessageType.Error: Console.ForegroundColor = ConsoleColor.Red; break;
+                                    case MessageType.Exception: Console.ForegroundColor = ConsoleColor.Magenta; break;
+                                }
+
+                                Console.WriteLine("[{0}] {1}", receivedMessage.ComponentName, receivedMessage.MessageText);
+                                Console.ForegroundColor = ConsoleColor.White; // reset foreground color to default
+                            }
+                        }
+
+                        //// generate response
+                        //DebugConsoleMessage responseMessage = new DebugConsoleMessage(MessageType.None, "DebugConsole", "OK");
+                        //string responseString = DebugConsoleMessage.EncodeToJson(responseMessage);
+
+                        //byte[] responseBytes = System.Text.Encoding.ASCII.GetBytes(responseString);
+                        //stream.Write(responseBytes, 0, responseBytes.Length);
+                        //Console.WriteLine("Sent: {0}", responseString);
                     }
 
                     // Shutdown and end connection
@@ -72,6 +88,35 @@ namespace DebugConsole
 
             Console.WriteLine("\nHit enter to continue...");
             Console.Read();
+        }
+
+        List<string> GetJsonStrings(string receivedString)
+        {
+            if (receivedString == null)
+                return null;
+
+            List<string> list = new List<string>();
+
+            int startPos, endPos;
+            startPos = 0;
+            while(startPos < receivedString.Length)
+            {
+                startPos = receivedString.IndexOf("{", startPos);
+                endPos = receivedString.IndexOf("}", startPos + 1);
+                if (startPos < 0 || endPos < 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("GetJsonStrings() processing error.");
+                    break;
+                }
+                int length = endPos - startPos + 1;
+                //Console.WriteLine("GetJsonStrings() StartPos: {0}, EndPos: {1}, Length: {2}", startPos, endPos, length);
+                string jsonString = receivedString.Substring(startPos, length);
+                list.Add(jsonString);
+                startPos = endPos + 1;
+            }
+
+            return list;
         }
     }
 }
