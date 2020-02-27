@@ -95,7 +95,6 @@ namespace DebugConsole
         }
         #endregion
 
-
         List<string> GetJsonStrings(string receivedString)
         {
             if (receivedString == null)

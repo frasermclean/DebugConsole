@@ -69,9 +69,13 @@
             // 
             // richTextBoxMain
             // 
-            this.richTextBoxMain.Location = new System.Drawing.Point(12, 43);
+            this.richTextBoxMain.BackColor = System.Drawing.Color.Black;
+            this.richTextBoxMain.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.richTextBoxMain.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxMain.ForeColor = System.Drawing.Color.White;
+            this.richTextBoxMain.Location = new System.Drawing.Point(0, 55);
             this.richTextBoxMain.Name = "richTextBoxMain";
-            this.richTextBoxMain.Size = new System.Drawing.Size(760, 506);
+            this.richTextBoxMain.Size = new System.Drawing.Size(784, 506);
             this.richTextBoxMain.TabIndex = 3;
             this.richTextBoxMain.Text = "";
             // 
