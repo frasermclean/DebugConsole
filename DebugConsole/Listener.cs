@@ -45,7 +45,7 @@ namespace DebugConsole
 
                         foreach (string jsonString in GetJsonStrings(receivedString))
                         {
-                            DebugConsoleMessage receivedMessage = DebugConsoleMessage.DecodeFromJson(jsonString);
+                            Message receivedMessage = Message.DecodeFromJson(jsonString);
                             if (receivedMessage != null)
                             {
                                 // set foreground colour based on message type
