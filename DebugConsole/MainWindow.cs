@@ -11,31 +11,20 @@ namespace DebugConsole
         {
             InitializeComponent();
 
-            // set default values
-            textPortNumber.Text = Listener.PortDefault.ToString();
-
             // create new listener object
             listener = new Listener(Listener.PortDefault);
             listener.GeneralEventHandler += Listener_GeneralEventHandler;
             listener.MessageReceivedHandler += Listener_MessageReceivedHandler;
         }
 
-        private void textPortNumber_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void labelPortNumber_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void buttonStartListening_Click(object sender, EventArgs e)
-        {
-            listener.Start();
-        }
-
         #region Listener callbacks
         private void Listener_GeneralEventHandler(object sender, GeneralEventArgs e)
         {
+            if (listener.IsActive)
+                labelStatusText.Text = "Listener active on port: " + listener.Port;
+            else
+                labelStatusText.Text = "Not listening for incoming messages.";
+
             TextBoxAppend(e.Message);
         }
 
@@ -66,10 +55,23 @@ namespace DebugConsole
         }
         #endregion
 
-        private void btnOptions_Click(object sender, EventArgs e)
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            labelStatusText.Text = "Main Window Loaded";
+        }
+
+        private void buttonOptions_Click(object sender, EventArgs e)
         {
             OptionsForm optionsForm = new OptionsForm();
             optionsForm.ShowDialog(this);
+        }
+
+        private void buttonToggleListening_Click(object sender, EventArgs e)
+        {
+            if (listener.IsActive)
+                listener.Stop();
+            else
+                listener.Start();
         }
     }
 }

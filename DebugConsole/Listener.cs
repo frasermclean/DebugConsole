@@ -10,29 +10,54 @@ namespace DebugConsole
     class Listener
     {
         public const int PortDefault = 5000;
-        private int port;
         private Thread thread;
+        private UdpClient client;
+
+        public bool IsActive
+        {
+            get { return client != null; }
+        }
+
+        public int Port { get; }
 
         public Listener(int port)
         {
-            this.port = port;
+            Port = port;
         }
 
         public void Start()
         {
-            if (thread == null)
+            if (client == null)
             {
+                // create udp client for reading incoming data
+                client = new UdpClient(Port);
+
+                // start worker thread
                 thread = new Thread(new ThreadStart(WorkerMethod));
                 thread.Start();
                 RaiseEvent("Listener thread created.");
             }
         }
 
+        public void Stop()
+        {
+            if (client != null)
+            {
+                // kill thread
+                thread.Abort();
+                thread = null;
+                RaiseEvent("Listener thread destroyed.");
+
+                // close client
+                client.Close();
+                client.Dispose();
+                client = null;
+                RaiseEvent("UDP client disposed.");
+            }
+        }
+
         void WorkerMethod()
         {
-            // create udp client for reading incoming data
-            UdpClient client = new UdpClient(port);
-
             // remote end point to record ip address and port number of sender
             IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
 
