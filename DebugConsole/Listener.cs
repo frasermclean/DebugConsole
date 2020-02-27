@@ -30,21 +30,21 @@ namespace DebugConsole
 
             try
             {
-                while(true)
-                { 
-                // blocks until a message returns on this socket from a remote host.
-                byte[] receiveBytes = client.Receive(ref remoteEndPoint);
-
-                // decode string
-                string receivedString = Encoding.ASCII.GetString(receiveBytes);
-
-                // parse received strings looking for messages
-                foreach (string jsonString in GetJsonStrings(receivedString))
+                while (true)
                 {
-                    Message receivedMessage = Message.DecodeFromJson(jsonString);
-                    if (receivedMessage != null)
-                        RaiseEvent(receivedMessage);
-                }
+                    // blocks until a message returns on this socket from a remote host.
+                    byte[] receiveBytes = client.Receive(ref remoteEndPoint);
+
+                    // decode string
+                    string receivedString = Encoding.ASCII.GetString(receiveBytes);
+
+                    // parse received strings looking for messages
+                    foreach (string jsonString in GetJsonStrings(receivedString))
+                    {
+                        Message receivedMessage = Message.DecodeFromJson(jsonString);
+                        if (receivedMessage != null)
+                            RaiseEvent(receivedMessage);
+                    }
                 }
             }
             catch (Exception e)
