@@ -16,5 +16,20 @@ namespace DebugConsole
         {
             InitializeComponent();
         }
+
+        private void textPortNumber_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelPortNumber_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonStartListening_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
