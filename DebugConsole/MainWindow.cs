@@ -15,6 +15,9 @@ namespace DebugConsole
         public MainWindow()
         {
             InitializeComponent();
+
+            // set default values
+            textPortNumber.Text = Listener.PortDefault.ToString();
         }
 
         private void textPortNumber_TextChanged(object sender, EventArgs e)
