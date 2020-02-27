@@ -10,14 +10,22 @@ namespace DebugConsole
     class Listener
     {
         public const int PortDefault = 5000;
-        private readonly int port;
-
-        public event EventHandler<MessageReceivedEventArgs> MessageReceivedHandler;
+        private int port;
+        private Thread thread;
 
         public Listener(int port)
         {
             this.port = port;
-            Thread thread = new Thread(new ThreadStart(WorkerMethod));
+        }
+
+        public void Start()
+        {
+            if (thread == null)
+            {
+                thread = new Thread(new ThreadStart(WorkerMethod));
+                thread.Start();
+                RaiseEvent("Listener thread created.");
+            }
         }
 
         void WorkerMethod()
@@ -27,6 +35,8 @@ namespace DebugConsole
 
             // remote end point to record ip address and port number of sender
             IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
+
+            RaiseEvent("Worker thread running.");
 
             try
             {
@@ -49,9 +59,32 @@ namespace DebugConsole
             }
             catch (Exception e)
             {
+                RaiseEvent("Exception occured: " + e.Message);
             }
         }
 
+        #region Events
+        public event EventHandler<GeneralEventArgs> GeneralEventHandler;
+
+        /// <summary>
+        /// Raises a general event
+        /// </summary>
+        /// <param name="message">Description of the general event</param>
+        void RaiseEvent(string message)
+        {
+            if (GeneralEventHandler != null)
+            {
+                GeneralEventArgs args = new GeneralEventArgs(message);
+                GeneralEventHandler(this, args);
+            }
+        }
+
+        public event EventHandler<MessageReceivedEventArgs> MessageReceivedHandler;
+
+        /// <summary>
+        /// Raises a message received event
+        /// </summary>
+        /// <param name="message">The message that was received.</param>
         void RaiseEvent(Message message)
         {
             if (MessageReceivedHandler != null)
@@ -60,6 +93,8 @@ namespace DebugConsole
                 MessageReceivedHandler(this, args);
             }
         }
+        #endregion
+
 
         List<string> GetJsonStrings(string receivedString)
         {
@@ -99,6 +134,16 @@ namespace DebugConsole
         {
             this.Message = message;
             this.TimeReceived = DateTime.Now;
+        }
+    }
+
+    public class GeneralEventArgs : EventArgs
+    {
+        public string Message { get; set; }
+
+        public GeneralEventArgs(string message)
+        {
+            Message = message;
         }
     }
 }
