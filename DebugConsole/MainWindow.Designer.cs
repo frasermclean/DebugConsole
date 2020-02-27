@@ -32,6 +32,7 @@
             this.labelPortNumber = new System.Windows.Forms.Label();
             this.buttonStartListening = new System.Windows.Forms.Button();
             this.richTextBoxMain = new System.Windows.Forms.RichTextBox();
+            this.btnOptions = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textPortNumber
@@ -79,11 +80,22 @@
             this.richTextBoxMain.TabIndex = 3;
             this.richTextBoxMain.Text = "";
             // 
+            // btnOptions
+            // 
+            this.btnOptions.Location = new System.Drawing.Point(280, 12);
+            this.btnOptions.Name = "btnOptions";
+            this.btnOptions.Size = new System.Drawing.Size(75, 23);
+            this.btnOptions.TabIndex = 4;
+            this.btnOptions.Text = "Options";
+            this.btnOptions.UseVisualStyleBackColor = true;
+            this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.btnOptions);
             this.Controls.Add(this.richTextBoxMain);
             this.Controls.Add(this.buttonStartListening);
             this.Controls.Add(this.labelPortNumber);
@@ -101,6 +113,7 @@
         private System.Windows.Forms.Label labelPortNumber;
         private System.Windows.Forms.Button buttonStartListening;
         private System.Windows.Forms.RichTextBox richTextBoxMain;
+        private System.Windows.Forms.Button btnOptions;
     }
 }
 

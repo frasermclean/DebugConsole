@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DebugConsole
@@ -72,5 +65,11 @@ namespace DebugConsole
             }
         }
         #endregion
+
+        private void btnOptions_Click(object sender, EventArgs e)
+        {
+            OptionsForm optionsForm = new OptionsForm();
+            optionsForm.ShowDialog(this);
+        }
     }
 }
