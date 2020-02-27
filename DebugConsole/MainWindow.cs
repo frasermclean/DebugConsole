@@ -7,6 +7,8 @@ namespace DebugConsole
     {
         Listener listener;
 
+        private delegate void SetTextDelegate(string text);
+
         public MainWindow()
         {
             InitializeComponent();
@@ -15,15 +17,30 @@ namespace DebugConsole
             listener = new Listener(Listener.PortDefault);
             listener.GeneralEventHandler += Listener_GeneralEventHandler;
             listener.MessageReceivedHandler += Listener_MessageReceivedHandler;
+            listener.Start();
         }
 
         #region Listener callbacks
         private void Listener_GeneralEventHandler(object sender, GeneralEventArgs e)
         {
-            if (listener.IsActive)
-                StatusTextSet("Listener active on port: " + listener.Port);
-            else
-                StatusTextSet("Not listening for incoming messages.");
+            switch (e.GeneralEvent)
+            {
+                case GeneralEvent.ActiveStateUpdated:
+                    if (listener.IsActive)
+                    {
+                        StatusTextSet("Listener active on port: " + listener.Port);
+                        ToggleListeningButtonSetText("Stop Listening");
+                    }
+                    else
+                    {
+                        StatusTextSet("Not listening for incoming messages.");
+                        ToggleListeningButtonSetText("Start Listening");
+                    }
+                    break;
+                case GeneralEvent.ExceptionOccured:
+                    TextBoxAppend("Listener exception occured: " + e.Message);
+                    break;
+            }
         }
 
         private void Listener_MessageReceivedHandler(object sender, MessageReceivedEventArgs e)
@@ -34,13 +51,11 @@ namespace DebugConsole
         #endregion
 
         #region Text box
-        private delegate void TextBoxAppendDelegate(string text);
-
         private void TextBoxAppend(string text)
         {
             if (richTextBoxMain.InvokeRequired)
             {
-                var d = new TextBoxAppendDelegate(TextBoxAppend);
+                var d = new SetTextDelegate(TextBoxAppend);
                 richTextBoxMain.Invoke(d, new object[] { text });
             }
             else
@@ -54,13 +69,11 @@ namespace DebugConsole
         #endregion
 
         #region Status text
-        private delegate void StatusTextSetDelegate(string text);
-
         void StatusTextSet(string text)
         {
             if (labelStatusText.InvokeRequired)
             {
-                var d = new StatusTextSetDelegate(StatusTextSet);
+                var d = new SetTextDelegate(StatusTextSet);
                 labelStatusText.Invoke(d, new object[] { text });
             }
             else
@@ -70,9 +83,23 @@ namespace DebugConsole
         }
         #endregion
 
+        #region Toggle listening button
+        private void ToggleListeningButtonSetText(string text)
+        {
+            if (buttonToggleListening.InvokeRequired)
+            {
+                var d = new SetTextDelegate(ToggleListeningButtonSetText);
+                buttonToggleListening.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                buttonToggleListening.Text = text;
+            }
+        }
+        #endregion
+
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            StatusTextSet("Main Window Loaded");
         }
 
         private void buttonOptions_Click(object sender, EventArgs e)
