@@ -21,11 +21,9 @@ namespace DebugConsole
         private void Listener_GeneralEventHandler(object sender, GeneralEventArgs e)
         {
             if (listener.IsActive)
-                labelStatusText.Text = "Listener active on port: " + listener.Port;
+                StatusTextSet("Listener active on port: " + listener.Port);
             else
-                labelStatusText.Text = "Not listening for incoming messages.";
-
-            TextBoxAppend(e.Message);
+                StatusTextSet("Not listening for incoming messages.");
         }
 
         private void Listener_MessageReceivedHandler(object sender, MessageReceivedEventArgs e)
@@ -55,9 +53,26 @@ namespace DebugConsole
         }
         #endregion
 
+        #region Status text
+        private delegate void StatusTextSetDelegate(string text);
+
+        void StatusTextSet(string text)
+        {
+            if (labelStatusText.InvokeRequired)
+            {
+                var d = new StatusTextSetDelegate(StatusTextSet);
+                labelStatusText.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                labelStatusText.Text = text;
+            }
+        }
+        #endregion
+
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            labelStatusText.Text = "Main Window Loaded";
+            StatusTextSet("Main Window Loaded");
         }
 
         private void buttonOptions_Click(object sender, EventArgs e)
