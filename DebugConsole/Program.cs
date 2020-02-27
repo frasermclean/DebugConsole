@@ -1,44 +1,22 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DebugConsole
 {
-    class Program
+    static class Program
     {
-        public static void Main(string[] args)
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
         {
-            SetupConsole();
-            int port = ProcessArguments(args);
-            Listener listener = new Listener(port);
-        }
-
-        static void SetupConsole()
-        {
-            Console.Title = "DebugConsole";
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("DebugConsole running.");
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-
-        static int ProcessArguments(string[] args)
-        {
-            try
-            {
-                int port;
-                if (args.Length >= 1)
-                    port = int.Parse(args[0]);
-                else
-                    port = Listener.PortDefault;
-
-                return port;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("ProcessArguments() exception caught: " + ex.Message);
-                return Listener.PortDefault;
-            }
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainWindow());
         }
     }
 }

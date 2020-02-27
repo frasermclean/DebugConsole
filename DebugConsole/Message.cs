@@ -4,13 +4,13 @@ using Newtonsoft.Json.Linq;
 
 namespace DebugConsole
 {
-    public class DebugConsoleMessage
+    public class Message
     {
         public MessageType MessageType { get; set; }
         public string ComponentName { get; set; }
         public string MessageText { get; set; }
 
-        public DebugConsoleMessage(MessageType messageType, string componentName, string messageText)
+        public Message(MessageType messageType, string componentName, string messageText)
         {
             MessageType = messageType;
             ComponentName = componentName;
@@ -22,7 +22,7 @@ namespace DebugConsole
         /// </summary>
         /// <param name="dcm">The object to convert.</param>
         /// <returns>The JSON formatted string.</returns>
-        public static string EncodeToJson(DebugConsoleMessage dcm)
+        public static string EncodeToJson(Message dcm)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace DebugConsole
         /// </summary>
         /// <param name="jsonString">The JSON formatted string to decode.</param>
         /// <returns>The decode DebugConsoleMessage object.</returns>
-        public static DebugConsoleMessage DecodeFromJson(string jsonString)
+        public static Message DecodeFromJson(string jsonString)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace DebugConsole
                 var componentName = (string)obj.SelectToken("ComponentName");
                 var messageText = (string)obj.SelectToken("MessageText");
 
-                DebugConsoleMessage dcm = new DebugConsoleMessage(messageType, componentName, messageText);
+                Message dcm = new Message(messageType, componentName, messageText);
 
                 return dcm;
             }
