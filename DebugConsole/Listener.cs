@@ -12,6 +12,8 @@ namespace DebugConsole
         public const int PortDefault = 5000;
         private readonly int port;
 
+        public event EventHandler<MessageReceivedEventArgs> MessageReceivedHandler;
+
         public Listener(int port)
         {
             this.port = port;
@@ -28,13 +30,34 @@ namespace DebugConsole
 
             try
             {
+                while(true)
+                { 
                 // blocks until a message returns on this socket from a remote host.
                 byte[] receiveBytes = client.Receive(ref remoteEndPoint);
 
-                string returnData = Encoding.ASCII.GetString(receiveBytes);
+                // decode string
+                string receivedString = Encoding.ASCII.GetString(receiveBytes);
+
+                // parse received strings looking for messages
+                foreach (string jsonString in GetJsonStrings(receivedString))
+                {
+                    Message receivedMessage = Message.DecodeFromJson(jsonString);
+                    if (receivedMessage != null)
+                        RaiseEvent(receivedMessage);
+                }
+                }
             }
             catch (Exception e)
             {
+            }
+        }
+
+        void RaiseEvent(Message message)
+        {
+            if (MessageReceivedHandler != null)
+            {
+                MessageReceivedEventArgs args = new MessageReceivedEventArgs(message);
+                MessageReceivedHandler(this, args);
             }
         }
 
@@ -64,6 +87,18 @@ namespace DebugConsole
             }
 
             return list;
+        }
+    }
+
+    public class MessageReceivedEventArgs : EventArgs
+    {
+        public Message Message { get; set; }
+        public DateTime TimeReceived { get; set; }
+
+        public MessageReceivedEventArgs(Message message)
+        {
+            this.Message = message;
+            this.TimeReceived = DateTime.Now;
         }
     }
 }
