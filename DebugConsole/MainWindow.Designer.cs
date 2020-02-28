@@ -63,9 +63,12 @@
             this.richTextBoxMain.ForeColor = System.Drawing.Color.White;
             this.richTextBoxMain.Location = new System.Drawing.Point(3, 43);
             this.richTextBoxMain.Name = "richTextBoxMain";
+            this.richTextBoxMain.ReadOnly = true;
+            this.richTextBoxMain.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
             this.richTextBoxMain.Size = new System.Drawing.Size(778, 515);
             this.richTextBoxMain.TabIndex = 6;
             this.richTextBoxMain.Text = "";
+            this.richTextBoxMain.TextChanged += new System.EventHandler(this.TextboxTextChangedHandler);
             // 
             // tableLayoutTop
             // 

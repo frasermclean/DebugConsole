@@ -5,7 +5,7 @@ namespace DebugConsole
 {
     public partial class MainWindow : Form
     {
-        Listener listener;
+        private Listener listener;
 
         private delegate void SetTextDelegate(string text);
 
@@ -38,7 +38,7 @@ namespace DebugConsole
                     }
                     break;
                 case GeneralEvent.ExceptionOccured:
-                    TextBoxAppend("Listener exception occured: " + e.Message);
+                    StatusTextSet("Listener exception occured: " + e.Message);
                     break;
             }
         }
@@ -47,6 +47,7 @@ namespace DebugConsole
         {
             string text = String.Format("[{0}] {1}", e.Message.ComponentName, e.Message.MessageText);
             TextBoxAppend(text);
+            StatusTextSet("Last message received at: " + e.TimeReceived.ToLongTimeString());
         }
         #endregion
 
@@ -65,6 +66,13 @@ namespace DebugConsole
                 else
                     richTextBoxMain.Text += "\n" + text;
             }
+        }
+
+        private void TextboxTextChangedHandler(object sender, EventArgs e)
+        {
+            // automatically scroll to the end
+            richTextBoxMain.SelectionStart = richTextBoxMain.Text.Length;
+            richTextBoxMain.ScrollToCaret();
         }
         #endregion
 
