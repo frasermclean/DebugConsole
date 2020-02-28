@@ -173,5 +173,15 @@ namespace DebugConsole
             MessagesReset();
             StatusTextSet("Messages cleared.");
         }
+
+        private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // kill any active listener
+            if (listener.IsActive)
+                listener.Stop();
+
+            // automatically exit the application when the form is closed
+            Application.Exit();
+        }
     }
 }
