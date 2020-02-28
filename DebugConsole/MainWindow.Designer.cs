@@ -140,6 +140,7 @@
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(tableLayoutMain);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(600, 300);
             this.Name = "MainWindow";
             this.Text = "DebugConsole";
             this.Load += new System.EventHandler(this.MainWindow_Load);
