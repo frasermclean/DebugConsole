@@ -7,36 +7,60 @@ using System.Text;
 
 namespace DebugConsole
 {
-    class Listener
+    public class Listener
     {
         public const int PortDefault = 5000;
-        private int port;
         private Thread thread;
+        private UdpClient client;
+
+        public bool IsActive
+        {
+            get { return client != null; }
+        }
+
+        public int Port { get; }
 
         public Listener(int port)
         {
-            this.port = port;
+            Port = port;
         }
 
         public void Start()
         {
-            if (thread == null)
+            if (client == null)
             {
+                // create udp client for reading incoming data
+                client = new UdpClient(Port);
+
+                // start worker thread
                 thread = new Thread(new ThreadStart(WorkerMethod));
                 thread.Start();
-                RaiseEvent("Listener thread created.");
+
+                RaiseEvent(GeneralEvent.ActiveStateUpdated, "Listener thread created.");
+            }
+        }
+
+        public void Stop()
+        {
+            if (client != null)
+            {
+                // kill thread
+                thread.Abort();
+                thread = null;
+
+                // close client
+                client.Close();
+                client.Dispose();
+                client = null;
+
+                RaiseEvent(GeneralEvent.ActiveStateUpdated, "UDP client disposed.");
             }
         }
 
         void WorkerMethod()
         {
-            // create udp client for reading incoming data
-            UdpClient client = new UdpClient(port);
-
             // remote end point to record ip address and port number of sender
             IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
-
-            RaiseEvent("Worker thread running.");
 
             try
             {
@@ -57,9 +81,14 @@ namespace DebugConsole
                     }
                 }
             }
+            catch (ThreadAbortException)
+            { }
             catch (Exception e)
             {
-                RaiseEvent("Exception occured: " + e.Message);
+                RaiseEvent(GeneralEvent.ExceptionOccured, e.Message);
+
+                if (IsActive)
+                    Stop();
             }
         }
 
@@ -69,12 +98,22 @@ namespace DebugConsole
         /// <summary>
         /// Raises a general event
         /// </summary>
+        /// <param name="eventType">The type of event to raise</param>
+        void RaiseEvent(GeneralEvent eventType)
+        {
+            RaiseEvent(eventType, string.Empty);
+        }
+
+        /// <summary>
+        /// Raises a general event
+        /// </summary>
+        /// <param name="eventType">The type of event to raise</param>
         /// <param name="message">Description of the general event</param>
-        void RaiseEvent(string message)
+        void RaiseEvent(GeneralEvent eventType, string message)
         {
             if (GeneralEventHandler != null)
             {
-                GeneralEventArgs args = new GeneralEventArgs(message);
+                GeneralEventArgs args = new GeneralEventArgs(eventType, message);
                 GeneralEventHandler(this, args);
             }
         }
@@ -94,7 +133,6 @@ namespace DebugConsole
             }
         }
         #endregion
-
 
         List<string> GetJsonStrings(string receivedString)
         {
@@ -139,11 +177,18 @@ namespace DebugConsole
 
     public class GeneralEventArgs : EventArgs
     {
+        public GeneralEvent GeneralEvent { get; set; }
         public string Message { get; set; }
 
-        public GeneralEventArgs(string message)
+        public GeneralEventArgs(GeneralEvent generalEvent, string message)
         {
+            GeneralEvent = generalEvent;
             Message = message;
         }
+    }
+    public enum GeneralEvent
+    {
+        ActiveStateUpdated,
+        ExceptionOccured,
     }
 }
