@@ -34,6 +34,7 @@
             this.buttonOptions = new System.Windows.Forms.Button();
             this.buttonToggleListening = new System.Windows.Forms.Button();
             this.labelStatusText = new System.Windows.Forms.Label();
+            this.buttonClear = new System.Windows.Forms.Button();
             tableLayoutMain = new System.Windows.Forms.TableLayoutPanel();
             tableLayoutTop = new System.Windows.Forms.TableLayoutPanel();
             tableLayoutMain.SuspendLayout();
@@ -72,14 +73,15 @@
             // 
             // tableLayoutTop
             // 
-            tableLayoutTop.ColumnCount = 3;
+            tableLayoutTop.ColumnCount = 4;
+            tableLayoutTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             tableLayoutTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             tableLayoutTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             tableLayoutTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            tableLayoutTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutTop.Controls.Add(this.buttonOptions, 0, 0);
-            tableLayoutTop.Controls.Add(this.buttonToggleListening, 1, 0);
-            tableLayoutTop.Controls.Add(this.labelStatusText, 2, 0);
+            tableLayoutTop.Controls.Add(this.buttonToggleListening, 2, 0);
+            tableLayoutTop.Controls.Add(this.labelStatusText, 3, 0);
+            tableLayoutTop.Controls.Add(this.buttonClear, 1, 0);
             tableLayoutTop.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutTop.Location = new System.Drawing.Point(3, 3);
             tableLayoutTop.Name = "tableLayoutTop";
@@ -102,7 +104,7 @@
             // buttonToggleListening
             // 
             this.buttonToggleListening.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonToggleListening.Location = new System.Drawing.Point(99, 3);
+            this.buttonToggleListening.Location = new System.Drawing.Point(195, 3);
             this.buttonToggleListening.Name = "buttonToggleListening";
             this.buttonToggleListening.Size = new System.Drawing.Size(90, 28);
             this.buttonToggleListening.TabIndex = 2;
@@ -114,11 +116,22 @@
             // 
             this.labelStatusText.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelStatusText.AutoSize = true;
-            this.labelStatusText.Location = new System.Drawing.Point(195, 9);
+            this.labelStatusText.Location = new System.Drawing.Point(291, 9);
             this.labelStatusText.Name = "labelStatusText";
             this.labelStatusText.Size = new System.Drawing.Size(63, 15);
             this.labelStatusText.TabIndex = 0;
             this.labelStatusText.Text = "Status Text";
+            // 
+            // buttonClear
+            // 
+            this.buttonClear.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonClear.Location = new System.Drawing.Point(99, 3);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(90, 28);
+            this.buttonClear.TabIndex = 3;
+            this.buttonClear.Text = "Clear";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // MainWindow
             // 
@@ -142,6 +155,7 @@
         private System.Windows.Forms.Label labelStatusText;
         private System.Windows.Forms.Button buttonOptions;
         private System.Windows.Forms.Button buttonToggleListening;
+        private System.Windows.Forms.Button buttonClear;
     }
 }
 

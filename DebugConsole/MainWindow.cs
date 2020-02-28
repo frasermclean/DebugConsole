@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace DebugConsole
@@ -6,12 +7,15 @@ namespace DebugConsole
     public partial class MainWindow : Form
     {
         private Listener listener;
+        private List<Message> messages;
 
         private delegate void SetTextDelegate(string text);
 
         public MainWindow()
         {
             InitializeComponent();
+
+            messages = new List<Message>();
 
             // create new listener object
             listener = new Listener(Listener.PortDefault);
@@ -45,27 +49,43 @@ namespace DebugConsole
 
         private void Listener_MessageReceivedHandler(object sender, MessageReceivedEventArgs e)
         {
-            string text = String.Format("[{0}] {1}", e.Message.ComponentName, e.Message.MessageText);
-            TextBoxAppend(text);
+            TextBoxAppend(e.Message);
             StatusTextSet("Last message received at: " + e.TimeReceived.ToLongTimeString());
         }
         #endregion
 
         #region Text box
-        private void TextBoxAppend(string text)
+        private delegate void TextBoxAppendDelegate(Message message);
+
+        private void TextBoxAppend(Message message)
         {
             if (richTextBoxMain.InvokeRequired)
             {
-                var d = new SetTextDelegate(TextBoxAppend);
-                richTextBoxMain.Invoke(d, new object[] { text });
+                var d = new TextBoxAppendDelegate(TextBoxAppend);
+                richTextBoxMain.Invoke(d, new object[] { message });
             }
             else
             {
-                if (richTextBoxMain.Text == String.Empty)
+                string text = string.Format("[{0}] {1}", message.ComponentName, message.MessageText);
+
+                if (richTextBoxMain.Text == string.Empty)
                     richTextBoxMain.Text = text;
                 else
                     richTextBoxMain.Text += "\n" + text;
             }
+        }
+
+        private void TextBoxRefresh()
+        {
+            richTextBoxMain.Text = string.Empty;
+            foreach (Message message in messages)
+                TextBoxAppend(message);
+        }
+
+        private void TextBoxClear()
+        {
+            messages = new List<Message>();
+            TextBoxRefresh();
         }
 
         private void TextboxTextChangedHandler(object sender, EventArgs e)
@@ -122,6 +142,12 @@ namespace DebugConsole
                 listener.Stop();
             else
                 listener.Start();
+        }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            TextBoxClear();
+            StatusTextSet("Messages cleared.");
         }
     }
 }
