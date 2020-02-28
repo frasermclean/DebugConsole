@@ -20,6 +20,7 @@ namespace DebugConsole
 
             // settings
             settings = new Settings();
+            settings.EventHandler += Settings_EventHandler;
 
             MessagesReset();
 
@@ -196,6 +197,11 @@ namespace DebugConsole
             base.Refresh();
 
             TextBoxRefresh();
+        }
+
+        private void Settings_EventHandler(object sender, SettingsEventArgs e)
+        {
+            MessageBox.Show(e.Message, "Settings exception occurred", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
     }
 }
