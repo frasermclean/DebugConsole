@@ -29,17 +29,34 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+            System.Windows.Forms.Label labelInfoTextColor;
+            System.Windows.Forms.Label labelNormalTextColor;
+            System.Windows.Forms.Label labelColorBackground;
+            System.Windows.Forms.Label labelWarningTextColor;
+            System.Windows.Forms.Label labelErrorTextColor;
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.labelPortNumber = new System.Windows.Forms.Label();
             this.textBoxPortNumber = new System.Windows.Forms.TextBox();
             this.buttonSelectFont = new System.Windows.Forms.Button();
             this.labelSelectedFont = new System.Windows.Forms.Label();
-            this.fontDialog = new System.Windows.Forms.FontDialog();
             this.pictureBoxBackground = new System.Windows.Forms.PictureBox();
-            this.labelColorBackground = new System.Windows.Forms.Label();
-            this.buttonSave = new System.Windows.Forms.Button();
+            this.fontDialog = new System.Windows.Forms.FontDialog();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.buttonOK = new System.Windows.Forms.Button();
             tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            labelInfoTextColor = new System.Windows.Forms.Label();
+            labelNormalTextColor = new System.Windows.Forms.Label();
+            labelColorBackground = new System.Windows.Forms.Label();
+            labelWarningTextColor = new System.Windows.Forms.Label();
+            labelErrorTextColor = new System.Windows.Forms.Label();
             tableLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBackground)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel
@@ -47,31 +64,95 @@
             tableLayoutPanel.ColumnCount = 2;
             tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            tableLayoutPanel.Controls.Add(this.labelColorBackground, 0, 2);
+            tableLayoutPanel.Controls.Add(this.pictureBox4, 1, 6);
+            tableLayoutPanel.Controls.Add(labelErrorTextColor, 0, 6);
+            tableLayoutPanel.Controls.Add(this.pictureBox3, 1, 5);
+            tableLayoutPanel.Controls.Add(labelWarningTextColor, 0, 5);
+            tableLayoutPanel.Controls.Add(this.pictureBox2, 1, 4);
+            tableLayoutPanel.Controls.Add(labelInfoTextColor, 0, 4);
+            tableLayoutPanel.Controls.Add(this.pictureBox1, 1, 3);
+            tableLayoutPanel.Controls.Add(labelNormalTextColor, 0, 3);
+            tableLayoutPanel.Controls.Add(labelColorBackground, 0, 2);
             tableLayoutPanel.Controls.Add(this.labelPortNumber, 0, 0);
             tableLayoutPanel.Controls.Add(this.textBoxPortNumber, 1, 0);
             tableLayoutPanel.Controls.Add(this.buttonSelectFont, 1, 1);
             tableLayoutPanel.Controls.Add(this.labelSelectedFont, 0, 1);
             tableLayoutPanel.Controls.Add(this.pictureBoxBackground, 1, 2);
-            tableLayoutPanel.Controls.Add(this.buttonSave, 0, 3);
+            tableLayoutPanel.Controls.Add(this.buttonOK, 0, 7);
             tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             tableLayoutPanel.Name = "tableLayoutPanel";
-            tableLayoutPanel.RowCount = 4;
-            tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            tableLayoutPanel.RowCount = 8;
             tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel.Size = new System.Drawing.Size(344, 201);
+            tableLayoutPanel.Size = new System.Drawing.Size(344, 321);
             tableLayoutPanel.TabIndex = 0;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox2.BackColor = System.Drawing.Color.DodgerBlue;
+            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox2.Location = new System.Drawing.Point(175, 132);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox2.TabIndex = 10;
+            this.pictureBox2.TabStop = false;
+            // 
+            // labelInfoTextColor
+            // 
+            labelInfoTextColor.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            labelInfoTextColor.AutoSize = true;
+            labelInfoTextColor.Location = new System.Drawing.Point(43, 136);
+            labelInfoTextColor.Name = "labelInfoTextColor";
+            labelInfoTextColor.Size = new System.Drawing.Size(126, 15);
+            labelInfoTextColor.TabIndex = 9;
+            labelInfoTextColor.Text = "Information Text Color";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox1.BackColor = System.Drawing.Color.Silver;
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.Location = new System.Drawing.Point(175, 100);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
+            // 
+            // labelNormalTextColor
+            // 
+            labelNormalTextColor.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            labelNormalTextColor.AutoSize = true;
+            labelNormalTextColor.Location = new System.Drawing.Point(66, 104);
+            labelNormalTextColor.Name = "labelNormalTextColor";
+            labelNormalTextColor.Size = new System.Drawing.Size(103, 15);
+            labelNormalTextColor.TabIndex = 7;
+            labelNormalTextColor.Text = "Normal Text Color";
+            // 
+            // labelColorBackground
+            // 
+            labelColorBackground.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            labelColorBackground.AutoSize = true;
+            labelColorBackground.Location = new System.Drawing.Point(66, 72);
+            labelColorBackground.Name = "labelColorBackground";
+            labelColorBackground.Size = new System.Drawing.Size(103, 15);
+            labelColorBackground.TabIndex = 5;
+            labelColorBackground.Text = "Background Color";
             // 
             // labelPortNumber
             // 
             this.labelPortNumber.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelPortNumber.AutoSize = true;
-            this.labelPortNumber.Location = new System.Drawing.Point(42, 12);
+            this.labelPortNumber.Location = new System.Drawing.Point(42, 8);
             this.labelPortNumber.Name = "labelPortNumber";
             this.labelPortNumber.Size = new System.Drawing.Size(127, 15);
             this.labelPortNumber.TabIndex = 0;
@@ -80,17 +161,17 @@
             // textBoxPortNumber
             // 
             this.textBoxPortNumber.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.textBoxPortNumber.Location = new System.Drawing.Point(175, 8);
+            this.textBoxPortNumber.Location = new System.Drawing.Point(175, 4);
             this.textBoxPortNumber.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBoxPortNumber.MaxLength = 5;
             this.textBoxPortNumber.Name = "textBoxPortNumber";
-            this.textBoxPortNumber.Size = new System.Drawing.Size(116, 23);
+            this.textBoxPortNumber.Size = new System.Drawing.Size(80, 23);
             this.textBoxPortNumber.TabIndex = 1;
             // 
             // buttonSelectFont
             // 
             this.buttonSelectFont.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.buttonSelectFont.Location = new System.Drawing.Point(175, 48);
+            this.buttonSelectFont.Location = new System.Drawing.Point(175, 36);
             this.buttonSelectFont.Name = "buttonSelectFont";
             this.buttonSelectFont.Size = new System.Drawing.Size(80, 24);
             this.buttonSelectFont.TabIndex = 2;
@@ -102,11 +183,22 @@
             // 
             this.labelSelectedFont.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.labelSelectedFont.AutoSize = true;
-            this.labelSelectedFont.Location = new System.Drawing.Point(94, 52);
+            this.labelSelectedFont.Location = new System.Drawing.Point(94, 40);
             this.labelSelectedFont.Name = "labelSelectedFont";
             this.labelSelectedFont.Size = new System.Drawing.Size(75, 15);
             this.labelSelectedFont.TabIndex = 3;
             this.labelSelectedFont.Text = "Font Preview\r\n";
+            // 
+            // pictureBoxBackground
+            // 
+            this.pictureBoxBackground.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBoxBackground.BackColor = System.Drawing.Color.Black;
+            this.pictureBoxBackground.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxBackground.Location = new System.Drawing.Point(175, 68);
+            this.pictureBoxBackground.Name = "pictureBoxBackground";
+            this.pictureBoxBackground.Size = new System.Drawing.Size(24, 24);
+            this.pictureBoxBackground.TabIndex = 4;
+            this.pictureBoxBackground.TabStop = false;
             // 
             // fontDialog
             // 
@@ -115,46 +207,66 @@
             this.fontDialog.MaxSize = 24;
             this.fontDialog.MinSize = 8;
             // 
-            // pictureBoxBackground
+            // labelWarningTextColor
             // 
-            this.pictureBoxBackground.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pictureBoxBackground.BackColor = System.Drawing.Color.Black;
-            this.pictureBoxBackground.Location = new System.Drawing.Point(175, 84);
-            this.pictureBoxBackground.Name = "pictureBoxBackground";
-            this.pictureBoxBackground.Size = new System.Drawing.Size(24, 24);
-            this.pictureBoxBackground.TabIndex = 4;
-            this.pictureBoxBackground.TabStop = false;
+            labelWarningTextColor.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            labelWarningTextColor.AutoSize = true;
+            labelWarningTextColor.Location = new System.Drawing.Point(61, 168);
+            labelWarningTextColor.Name = "labelWarningTextColor";
+            labelWarningTextColor.Size = new System.Drawing.Size(108, 15);
+            labelWarningTextColor.TabIndex = 11;
+            labelWarningTextColor.Text = "Warning Text Color";
             // 
-            // labelColorBackground
+            // pictureBox3
             // 
-            this.labelColorBackground.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelColorBackground.AutoSize = true;
-            this.labelColorBackground.Location = new System.Drawing.Point(66, 88);
-            this.labelColorBackground.Name = "labelColorBackground";
-            this.labelColorBackground.Size = new System.Drawing.Size(103, 15);
-            this.labelColorBackground.TabIndex = 5;
-            this.labelColorBackground.Text = "Background Color";
+            this.pictureBox3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox3.BackColor = System.Drawing.Color.Gold;
+            this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox3.Location = new System.Drawing.Point(175, 164);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox3.TabIndex = 12;
+            this.pictureBox3.TabStop = false;
             // 
-            // buttonSave
+            // labelErrorTextColor
             // 
-            this.buttonSave.Anchor = System.Windows.Forms.AnchorStyles.None;
-            tableLayoutPanel.SetColumnSpan(this.buttonSave, 2);
-            this.buttonSave.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonSave.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSave.Location = new System.Drawing.Point(112, 140);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(120, 32);
-            this.buttonSave.TabIndex = 6;
-            this.buttonSave.Text = "Save Settings";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonOK_Click);
+            labelErrorTextColor.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            labelErrorTextColor.AutoSize = true;
+            labelErrorTextColor.Location = new System.Drawing.Point(81, 199);
+            labelErrorTextColor.Name = "labelErrorTextColor";
+            labelErrorTextColor.Size = new System.Drawing.Size(88, 15);
+            labelErrorTextColor.TabIndex = 13;
+            labelErrorTextColor.Text = "Error Text Color";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox4.BackColor = System.Drawing.Color.Red;
+            this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox4.Location = new System.Drawing.Point(175, 195);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox4.TabIndex = 14;
+            this.pictureBox4.TabStop = false;
+            // 
+            // buttonOK
+            // 
+            this.buttonOK.Anchor = System.Windows.Forms.AnchorStyles.None;
+            tableLayoutPanel.SetColumnSpan(this.buttonOK, 2);
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonOK.Location = new System.Drawing.Point(92, 255);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(160, 32);
+            this.buttonOK.TabIndex = 15;
+            this.buttonOK.Text = "Save Settings";
+            this.buttonOK.UseVisualStyleBackColor = true;
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(344, 201);
+            this.ClientSize = new System.Drawing.Size(344, 321);
             this.Controls.Add(tableLayoutPanel);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -167,7 +279,11 @@
             this.TopMost = true;
             tableLayoutPanel.ResumeLayout(false);
             tableLayoutPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBackground)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -179,8 +295,11 @@
         private System.Windows.Forms.FontDialog fontDialog;
         private System.Windows.Forms.Button buttonSelectFont;
         private System.Windows.Forms.Label labelSelectedFont;
-        private System.Windows.Forms.Label labelColorBackground;
         private System.Windows.Forms.PictureBox pictureBoxBackground;
-        private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Button buttonOK;
     }
 }
