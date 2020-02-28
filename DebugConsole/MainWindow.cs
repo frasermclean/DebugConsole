@@ -156,7 +156,7 @@ namespace DebugConsole
 
         private void buttonOptions_Click(object sender, EventArgs e)
         {
-            OptionsForm optionsForm = new OptionsForm();
+            SettingsForm optionsForm = new SettingsForm();
             optionsForm.ShowDialog(this);
         }
 
