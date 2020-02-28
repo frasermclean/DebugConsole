@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace DebugConsole
 {
@@ -15,7 +16,7 @@ namespace DebugConsole
         {
             InitializeComponent();
 
-            messages = new List<Message>();
+            MessagesReset();
 
             // create new listener object
             listener = new Listener(Listener.PortDefault);
@@ -66,12 +67,29 @@ namespace DebugConsole
             }
             else
             {
-                string text = string.Format("[{0}] {1}", message.ComponentName, message.MessageText);
+                richTextBoxMain.DeselectAll();
 
-                if (richTextBoxMain.Text == string.Empty)
-                    richTextBoxMain.Text = text;
-                else
-                    richTextBoxMain.Text += "\n" + text;
+                // append newline if needed
+                if (!string.IsNullOrEmpty(richTextBoxMain.Text))
+                    richTextBoxMain.AppendText(Environment.NewLine);
+
+                // specify color based on message type
+                switch (message.MessageType)
+                {
+                    case MessageType.None: richTextBoxMain.SelectionColor = Color.LightGray; break;
+                    case MessageType.Info: richTextBoxMain.SelectionColor = Color.Green; break;
+                    case MessageType.Warning: richTextBoxMain.SelectionColor = Color.Yellow; break;
+                    case MessageType.Error: richTextBoxMain.SelectionColor = Color.Red; break;
+                    case MessageType.Exception: richTextBoxMain.SelectionColor = Color.Magenta; break;
+                }
+
+                // component name
+                richTextBoxMain.SelectionFont = new Font(richTextBoxMain.SelectionFont, FontStyle.Bold);
+                richTextBoxMain.AppendText(string.Format("[{0}] ", message.ComponentName));
+
+                // message text
+                richTextBoxMain.SelectionFont = new Font(richTextBoxMain.SelectionFont, FontStyle.Regular);
+                richTextBoxMain.AppendText(string.Format("{0}", message.MessageText));
             }
         }
 
@@ -80,12 +98,6 @@ namespace DebugConsole
             richTextBoxMain.Text = string.Empty;
             foreach (Message message in messages)
                 TextBoxAppend(message);
-        }
-
-        private void TextBoxClear()
-        {
-            messages = new List<Message>();
-            TextBoxRefresh();
         }
 
         private void TextboxTextChangedHandler(object sender, EventArgs e)
@@ -126,6 +138,12 @@ namespace DebugConsole
         }
         #endregion
 
+        private void MessagesReset()
+        {
+            messages = new List<Message>();
+            TextBoxRefresh();
+        }
+
         private void MainWindow_Load(object sender, EventArgs e)
         {
         }
@@ -146,7 +164,7 @@ namespace DebugConsole
 
         private void buttonClear_Click(object sender, EventArgs e)
         {
-            TextBoxClear();
+            MessagesReset();
             StatusTextSet("Messages cleared.");
         }
     }
