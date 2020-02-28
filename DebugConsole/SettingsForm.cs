@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace DebugConsole
 {
-    public partial class OptionsForm : Form
+    public partial class SettingsForm : Form
     {
-        public OptionsForm()
+        public SettingsForm()
         {
             InitializeComponent();
         }

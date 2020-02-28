@@ -1,6 +1,6 @@
 ﻿namespace DebugConsole
 {
-    partial class OptionsForm
+    partial class SettingsForm
     {
         /// <summary>
         /// Required designer variable.

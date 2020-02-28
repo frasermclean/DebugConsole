@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.TableLayoutPanel tableLayoutMain;
             System.Windows.Forms.TableLayoutPanel tableLayoutTop;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.richTextBoxMain = new System.Windows.Forms.RichTextBox();
             this.buttonOptions = new System.Windows.Forms.Button();
             this.buttonToggleListening = new System.Windows.Forms.Button();
@@ -78,10 +79,10 @@
             tableLayoutTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             tableLayoutTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             tableLayoutTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            tableLayoutTop.Controls.Add(this.buttonOptions, 0, 0);
+            tableLayoutTop.Controls.Add(this.buttonClear, 0, 0);
+            tableLayoutTop.Controls.Add(this.buttonOptions, 1, 0);
             tableLayoutTop.Controls.Add(this.buttonToggleListening, 2, 0);
             tableLayoutTop.Controls.Add(this.labelStatusText, 3, 0);
-            tableLayoutTop.Controls.Add(this.buttonClear, 1, 0);
             tableLayoutTop.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutTop.Location = new System.Drawing.Point(3, 3);
             tableLayoutTop.Name = "tableLayoutTop";
@@ -92,12 +93,16 @@
             // 
             // buttonOptions
             // 
+            this.buttonOptions.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.buttonOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonOptions.Image = ((System.Drawing.Image)(resources.GetObject("buttonOptions.Image")));
+            this.buttonOptions.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonOptions.Location = new System.Drawing.Point(3, 3);
             this.buttonOptions.Name = "buttonOptions";
             this.buttonOptions.Size = new System.Drawing.Size(90, 28);
             this.buttonOptions.TabIndex = 1;
-            this.buttonOptions.Text = "Options";
+            this.buttonOptions.Text = "Settings";
+            this.buttonOptions.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonOptions.UseVisualStyleBackColor = true;
             this.buttonOptions.Click += new System.EventHandler(this.buttonOptions_Click);
             // 
@@ -125,11 +130,14 @@
             // buttonClear
             // 
             this.buttonClear.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonClear.Image = global::DebugConsole.Properties.Resources.DeleteIcon;
+            this.buttonClear.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonClear.Location = new System.Drawing.Point(99, 3);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(90, 28);
             this.buttonClear.TabIndex = 3;
             this.buttonClear.Text = "Clear";
+            this.buttonClear.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonClear.UseVisualStyleBackColor = true;
             this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
