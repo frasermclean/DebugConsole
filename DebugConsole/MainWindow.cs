@@ -18,10 +18,10 @@ namespace DebugConsole
         {
             InitializeComponent();
 
-            MessagesReset();
-
             // settings
             settings = new Settings();
+
+            MessagesReset();
 
             // create new listener object
             listener = new Listener(Listener.PortDefault);
@@ -73,7 +73,6 @@ namespace DebugConsole
             else
             {
                 richTextBoxMain.DeselectAll();
-                richTextBoxMain.Font = settings.Font;
 
                 // append newline if needed
                 if (!string.IsNullOrEmpty(richTextBoxMain.Text))
@@ -82,11 +81,11 @@ namespace DebugConsole
                 // specify color based on message type
                 switch (message.MessageType)
                 {
-                    case MessageType.None: richTextBoxMain.SelectionColor = Color.LightGray; break;
-                    case MessageType.Info: richTextBoxMain.SelectionColor = Color.Green; break;
-                    case MessageType.Warning: richTextBoxMain.SelectionColor = Color.Yellow; break;
-                    case MessageType.Error: richTextBoxMain.SelectionColor = Color.Red; break;
-                    case MessageType.Exception: richTextBoxMain.SelectionColor = Color.Magenta; break;
+                    case MessageType.None: richTextBoxMain.SelectionColor = settings.NormalTextColor; break;
+                    case MessageType.Info: richTextBoxMain.SelectionColor = settings.InfoTextColor; break;
+                    case MessageType.Warning: richTextBoxMain.SelectionColor = settings.WarningTextColor; break;
+                    case MessageType.Error: richTextBoxMain.SelectionColor = settings.ErrorTextColor; break;
+                    case MessageType.Exception: richTextBoxMain.SelectionColor = settings.ErrorTextColor; break;
                 }
 
                 // component name
@@ -102,6 +101,8 @@ namespace DebugConsole
         private void TextBoxRefresh()
         {
             richTextBoxMain.Text = string.Empty;
+            richTextBoxMain.Font = settings.Font;
+            richTextBoxMain.BackColor = settings.BackgroundColor;
             foreach (Message message in messages)
                 TextBoxAppend(message);
         }
@@ -147,7 +148,7 @@ namespace DebugConsole
         private void MessagesReset()
         {
             messages = new List<Message>();
-            TextBoxRefresh();
+            Refresh();
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
@@ -159,10 +160,11 @@ namespace DebugConsole
             Text = string.Format("{0} - v{1}", assemblyName, versionString);
         }
 
-        private void buttonOptions_Click(object sender, EventArgs e)
+        private void ButtonSettings_Click(object sender, EventArgs e)
         {
             SettingsForm optionsForm = new SettingsForm(settings);
-            optionsForm.ShowDialog(this);
+            if (optionsForm.ShowDialog(this) == DialogResult.OK)
+                Refresh();
         }
 
         private void buttonToggleListening_Click(object sender, EventArgs e)
@@ -187,6 +189,13 @@ namespace DebugConsole
 
             // automatically exit the application when the form is closed
             Application.Exit();
+        }
+
+        public override void Refresh()
+        {
+            base.Refresh();
+
+            TextBoxRefresh();
         }
     }
 }
