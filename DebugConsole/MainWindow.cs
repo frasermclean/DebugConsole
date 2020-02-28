@@ -10,6 +10,7 @@ namespace DebugConsole
     {
         private Listener listener;
         private List<Message> messages;
+        private Settings settings;
 
         private delegate void SetTextDelegate(string text);
 
@@ -18,6 +19,9 @@ namespace DebugConsole
             InitializeComponent();
 
             MessagesReset();
+
+            // settings
+            settings = new Settings();
 
             // create new listener object
             listener = new Listener(Listener.PortDefault);
@@ -69,6 +73,7 @@ namespace DebugConsole
             else
             {
                 richTextBoxMain.DeselectAll();
+                richTextBoxMain.Font = settings.Font;
 
                 // append newline if needed
                 if (!string.IsNullOrEmpty(richTextBoxMain.Text))
@@ -85,11 +90,11 @@ namespace DebugConsole
                 }
 
                 // component name
-                richTextBoxMain.SelectionFont = new Font(richTextBoxMain.SelectionFont, FontStyle.Bold);
+                richTextBoxMain.SelectionFont = new Font(settings.Font, FontStyle.Bold);
                 richTextBoxMain.AppendText(string.Format("[{0}] ", message.ComponentName));
 
                 // message text
-                richTextBoxMain.SelectionFont = new Font(richTextBoxMain.SelectionFont, FontStyle.Regular);
+                richTextBoxMain.SelectionFont = new Font(settings.Font, FontStyle.Regular);
                 richTextBoxMain.AppendText(string.Format("{0}", message.MessageText));
             }
         }
@@ -156,7 +161,7 @@ namespace DebugConsole
 
         private void buttonOptions_Click(object sender, EventArgs e)
         {
-            SettingsForm optionsForm = new SettingsForm();
+            SettingsForm optionsForm = new SettingsForm(settings);
             optionsForm.ShowDialog(this);
         }
 
