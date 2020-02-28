@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Reflection;
 
 namespace DebugConsole
 {
@@ -146,6 +147,11 @@ namespace DebugConsole
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
+            // show version number in window title
+            Version version = Assembly.GetEntryAssembly().GetName().Version;
+            string assemblyName = Assembly.GetEntryAssembly().GetName().Name;
+            string versionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
+            Text = string.Format("{0} - v{1}", assemblyName, versionString);
         }
 
         private void buttonOptions_Click(object sender, EventArgs e)
