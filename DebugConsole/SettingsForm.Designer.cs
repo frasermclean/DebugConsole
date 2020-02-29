@@ -214,6 +214,7 @@
             this.textBoxPortNumber.Name = "textBoxPortNumber";
             this.textBoxPortNumber.Size = new System.Drawing.Size(80, 23);
             this.textBoxPortNumber.TabIndex = 1;
+            this.textBoxPortNumber.TextChanged += new System.EventHandler(this.TextBoxPortNumber_TextChanged);
             // 
             // buttonSelectFont
             // 

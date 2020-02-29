@@ -16,6 +16,17 @@ namespace DebugConsole
         }
 
         #region Event handlers
+        private void TextBoxPortNumber_TextChanged(object sender, EventArgs e)
+        {
+            if (ushort.TryParse(textBoxPortNumber.Text, out ushort result) && result > 0 && result <= 65535)
+                settings.ListeningPortNumber = result;
+            else
+            {
+                MessageBox.Show("Invalid port number", "Invalid port number", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                settings.ListeningPortNumber = Listener.PortDefault;
+                Refresh();
+            }
+        }
         private void ButtonSelectFont_Click(object sender, EventArgs e)
         {
             fontDialog.Font = settings.Font;
@@ -68,5 +79,7 @@ namespace DebugConsole
             pictureBoxWarningText.BackColor = settings.WarningTextColor;
             pictureBoxErrorText.BackColor = settings.ErrorTextColor;
         }
+
+        
     }
 }
