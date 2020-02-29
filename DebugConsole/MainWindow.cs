@@ -19,13 +19,14 @@ namespace DebugConsole
             InitializeComponent();
 
             // settings
-            settings = new Settings();
+            settings = new Settings();            
             settings.EventHandler += Settings_EventHandler;
+            settings.Load();
 
             MessagesReset();
 
             // create new listener object
-            listener = new Listener(Listener.PortDefault);
+            listener = new Listener(settings.ListeningPortNumber);
             listener.GeneralEventHandler += Listener_GeneralEventHandler;
             listener.MessageReceivedHandler += Listener_MessageReceivedHandler;
             listener.Start();
