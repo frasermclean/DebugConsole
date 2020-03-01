@@ -9,7 +9,7 @@ namespace DebugConsole
 {
     public class Listener
     {
-        public const int PortDefault = 5000;
+        public const int PortDefault = 64000;
         private Thread thread;
         private UdpClient client;
 
