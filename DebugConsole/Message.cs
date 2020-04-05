@@ -1,6 +1,6 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 
 namespace DebugConsole
 {
@@ -72,5 +72,6 @@ namespace DebugConsole
         Warning,
         Error,
         Exception,
+        Raw,
     }
 }

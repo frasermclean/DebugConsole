@@ -30,11 +30,12 @@
         {
             System.Windows.Forms.TableLayoutPanel tableLayoutMain;
             System.Windows.Forms.TableLayoutPanel tableLayoutTop;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.richTextBoxMain = new System.Windows.Forms.RichTextBox();
-            this.buttonOptions = new System.Windows.Forms.Button();
+            this.buttonClear = new System.Windows.Forms.Button();
+            this.buttonSettings = new System.Windows.Forms.Button();
             this.buttonToggleListening = new System.Windows.Forms.Button();
             this.labelStatusText = new System.Windows.Forms.Label();
-            this.buttonClear = new System.Windows.Forms.Button();
             tableLayoutMain = new System.Windows.Forms.TableLayoutPanel();
             tableLayoutTop = new System.Windows.Forms.TableLayoutPanel();
             tableLayoutMain.SuspendLayout();
@@ -78,10 +79,10 @@
             tableLayoutTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             tableLayoutTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             tableLayoutTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            tableLayoutTop.Controls.Add(this.buttonOptions, 0, 0);
+            tableLayoutTop.Controls.Add(this.buttonClear, 0, 0);
+            tableLayoutTop.Controls.Add(this.buttonSettings, 1, 0);
             tableLayoutTop.Controls.Add(this.buttonToggleListening, 2, 0);
             tableLayoutTop.Controls.Add(this.labelStatusText, 3, 0);
-            tableLayoutTop.Controls.Add(this.buttonClear, 1, 0);
             tableLayoutTop.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutTop.Location = new System.Drawing.Point(3, 3);
             tableLayoutTop.Name = "tableLayoutTop";
@@ -90,16 +91,34 @@
             tableLayoutTop.Size = new System.Drawing.Size(778, 34);
             tableLayoutTop.TabIndex = 7;
             // 
-            // buttonOptions
+            // buttonClear
             // 
-            this.buttonOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonOptions.Location = new System.Drawing.Point(3, 3);
-            this.buttonOptions.Name = "buttonOptions";
-            this.buttonOptions.Size = new System.Drawing.Size(90, 28);
-            this.buttonOptions.TabIndex = 1;
-            this.buttonOptions.Text = "Options";
-            this.buttonOptions.UseVisualStyleBackColor = true;
-            this.buttonOptions.Click += new System.EventHandler(this.buttonOptions_Click);
+            this.buttonClear.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonClear.Image = global::DebugConsole.Properties.Resources.DeleteIcon;
+            this.buttonClear.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonClear.Location = new System.Drawing.Point(3, 3);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(90, 28);
+            this.buttonClear.TabIndex = 3;
+            this.buttonClear.Text = "Clear";
+            this.buttonClear.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            // 
+            // buttonSettings
+            // 
+            this.buttonSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.buttonSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonSettings.Image = ((System.Drawing.Image)(resources.GetObject("buttonSettings.Image")));
+            this.buttonSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonSettings.Location = new System.Drawing.Point(99, 3);
+            this.buttonSettings.Name = "buttonSettings";
+            this.buttonSettings.Size = new System.Drawing.Size(90, 28);
+            this.buttonSettings.TabIndex = 1;
+            this.buttonSettings.Text = "Settings";
+            this.buttonSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonSettings.UseVisualStyleBackColor = true;
+            this.buttonSettings.Click += new System.EventHandler(this.ButtonSettings_Click);
             // 
             // buttonToggleListening
             // 
@@ -122,17 +141,6 @@
             this.labelStatusText.TabIndex = 0;
             this.labelStatusText.Text = "Status Text";
             // 
-            // buttonClear
-            // 
-            this.buttonClear.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonClear.Location = new System.Drawing.Point(99, 3);
-            this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(90, 28);
-            this.buttonClear.TabIndex = 3;
-            this.buttonClear.Text = "Clear";
-            this.buttonClear.UseVisualStyleBackColor = true;
-            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -140,8 +148,10 @@
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(tableLayoutMain);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(600, 300);
             this.Name = "MainWindow";
             this.Text = "DebugConsole";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWindow_FormClosed);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             tableLayoutMain.ResumeLayout(false);
             tableLayoutTop.ResumeLayout(false);
@@ -153,7 +163,7 @@
         #endregion
         private System.Windows.Forms.RichTextBox richTextBoxMain;
         private System.Windows.Forms.Label labelStatusText;
-        private System.Windows.Forms.Button buttonOptions;
+        private System.Windows.Forms.Button buttonSettings;
         private System.Windows.Forms.Button buttonToggleListening;
         private System.Windows.Forms.Button buttonClear;
     }

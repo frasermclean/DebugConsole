@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace DebugConsole
 {
@@ -10,6 +10,7 @@ namespace DebugConsole
     {
         private Listener listener;
         private List<Message> messages;
+        private Settings settings;
 
         private delegate void SetTextDelegate(string text);
 
@@ -17,10 +18,15 @@ namespace DebugConsole
         {
             InitializeComponent();
 
+            // settings
+            settings = new Settings();
+            settings.EventHandler += Settings_EventHandler;
+            settings.Load();
+
             MessagesReset();
 
             // create new listener object
-            listener = new Listener(Listener.PortDefault);
+            listener = new Listener(settings.ListeningPortNumber);
             listener.GeneralEventHandler += Listener_GeneralEventHandler;
             listener.MessageReceivedHandler += Listener_MessageReceivedHandler;
             listener.Start();
@@ -77,19 +83,23 @@ namespace DebugConsole
                 // specify color based on message type
                 switch (message.MessageType)
                 {
-                    case MessageType.None: richTextBoxMain.SelectionColor = Color.LightGray; break;
-                    case MessageType.Info: richTextBoxMain.SelectionColor = Color.Green; break;
-                    case MessageType.Warning: richTextBoxMain.SelectionColor = Color.Yellow; break;
-                    case MessageType.Error: richTextBoxMain.SelectionColor = Color.Red; break;
-                    case MessageType.Exception: richTextBoxMain.SelectionColor = Color.Magenta; break;
+                    case MessageType.None: richTextBoxMain.SelectionColor = settings.NormalTextColor; break;
+                    case MessageType.Info: richTextBoxMain.SelectionColor = settings.InfoTextColor; break;
+                    case MessageType.Warning: richTextBoxMain.SelectionColor = settings.WarningTextColor; break;
+                    case MessageType.Error: richTextBoxMain.SelectionColor = settings.ErrorTextColor; break;
+                    case MessageType.Exception: richTextBoxMain.SelectionColor = settings.ExceptionTextColor; break;
+                    case MessageType.Raw: // special case for raw type
+                        richTextBoxMain.SelectionColor = settings.RawTextColor;
+                        richTextBoxMain.AppendText(message.MessageText);
+                        return;
                 }
 
                 // component name
-                richTextBoxMain.SelectionFont = new Font(richTextBoxMain.SelectionFont, FontStyle.Bold);
+                richTextBoxMain.SelectionFont = new Font(settings.Font, FontStyle.Bold);
                 richTextBoxMain.AppendText(string.Format("[{0}] ", message.ComponentName));
 
                 // message text
-                richTextBoxMain.SelectionFont = new Font(richTextBoxMain.SelectionFont, FontStyle.Regular);
+                richTextBoxMain.SelectionFont = new Font(settings.Font, FontStyle.Regular);
                 richTextBoxMain.AppendText(string.Format("{0}", message.MessageText));
             }
         }
@@ -97,6 +107,8 @@ namespace DebugConsole
         private void TextBoxRefresh()
         {
             richTextBoxMain.Text = string.Empty;
+            richTextBoxMain.Font = settings.Font;
+            richTextBoxMain.BackColor = settings.BackgroundColor;
             foreach (Message message in messages)
                 TextBoxAppend(message);
         }
@@ -142,7 +154,7 @@ namespace DebugConsole
         private void MessagesReset()
         {
             messages = new List<Message>();
-            TextBoxRefresh();
+            Refresh();
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
@@ -154,10 +166,11 @@ namespace DebugConsole
             Text = string.Format("{0} - v{1}", assemblyName, versionString);
         }
 
-        private void buttonOptions_Click(object sender, EventArgs e)
+        private void ButtonSettings_Click(object sender, EventArgs e)
         {
-            OptionsForm optionsForm = new OptionsForm();
-            optionsForm.ShowDialog(this);
+            SettingsForm optionsForm = new SettingsForm(settings);
+            if (optionsForm.ShowDialog(this) == DialogResult.OK)
+                Refresh();
         }
 
         private void buttonToggleListening_Click(object sender, EventArgs e)
@@ -172,6 +185,28 @@ namespace DebugConsole
         {
             MessagesReset();
             StatusTextSet("Messages cleared.");
+        }
+
+        private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // kill any active listener
+            if (listener.IsActive)
+                listener.Stop();
+
+            // automatically exit the application when the form is closed
+            Application.Exit();
+        }
+
+        public override void Refresh()
+        {
+            base.Refresh();
+
+            TextBoxRefresh();
+        }
+
+        private void Settings_EventHandler(object sender, SettingsEventArgs e)
+        {
+            MessageBox.Show(e.Message, "Settings exception occurred", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
     }
 }
