@@ -72,5 +72,6 @@ namespace DebugConsole
         Warning,
         Error,
         Exception,
+        Raw,
     }
 }
