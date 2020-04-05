@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
-            System.Windows.Forms.Label labelErrorTextColor;
             System.Windows.Forms.Label labelWarningTextColor;
             System.Windows.Forms.Label labelInfoTextColor;
             System.Windows.Forms.Label labelNormalTextColor;
             System.Windows.Forms.Label labelColorBackground;
-            this.pictureBoxErrorText = new System.Windows.Forms.PictureBox();
+            System.Windows.Forms.Label labelErrorTextColor;
+            System.Windows.Forms.Label labelRawTextColor;
             this.pictureBoxWarningText = new System.Windows.Forms.PictureBox();
             this.pictureBoxInfoText = new System.Windows.Forms.PictureBox();
             this.pictureBoxNormalText = new System.Windows.Forms.PictureBox();
@@ -43,21 +43,25 @@
             this.buttonSelectFont = new System.Windows.Forms.Button();
             this.labelSelectedFont = new System.Windows.Forms.Label();
             this.pictureBoxBackground = new System.Windows.Forms.PictureBox();
-            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonSaveSettings = new System.Windows.Forms.Button();
             this.fontDialog = new System.Windows.Forms.FontDialog();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.pictureBoxErrorText = new System.Windows.Forms.PictureBox();
+            this.pictureBoxRawText = new System.Windows.Forms.PictureBox();
             tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            labelErrorTextColor = new System.Windows.Forms.Label();
             labelWarningTextColor = new System.Windows.Forms.Label();
             labelInfoTextColor = new System.Windows.Forms.Label();
             labelNormalTextColor = new System.Windows.Forms.Label();
             labelColorBackground = new System.Windows.Forms.Label();
+            labelErrorTextColor = new System.Windows.Forms.Label();
+            labelRawTextColor = new System.Windows.Forms.Label();
             tableLayoutPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxErrorText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWarningText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInfoText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxNormalText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBackground)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxErrorText)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRawText)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel
@@ -65,6 +69,8 @@
             tableLayoutPanel.ColumnCount = 2;
             tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableLayoutPanel.Controls.Add(this.pictureBoxRawText, 1, 7);
+            tableLayoutPanel.Controls.Add(labelRawTextColor, 0, 7);
             tableLayoutPanel.Controls.Add(this.pictureBoxErrorText, 1, 6);
             tableLayoutPanel.Controls.Add(labelErrorTextColor, 0, 6);
             tableLayoutPanel.Controls.Add(this.pictureBoxWarningText, 1, 5);
@@ -79,12 +85,14 @@
             tableLayoutPanel.Controls.Add(this.buttonSelectFont, 1, 1);
             tableLayoutPanel.Controls.Add(this.labelSelectedFont, 0, 1);
             tableLayoutPanel.Controls.Add(this.pictureBoxBackground, 1, 2);
-            tableLayoutPanel.Controls.Add(this.buttonOK, 0, 7);
+            tableLayoutPanel.Controls.Add(this.buttonSaveSettings, 0, 8);
             tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             tableLayoutPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             tableLayoutPanel.Name = "tableLayoutPanel";
-            tableLayoutPanel.RowCount = 8;
+            tableLayoutPanel.RowCount = 9;
+            tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
@@ -93,31 +101,8 @@
             tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             tableLayoutPanel.Size = new System.Drawing.Size(344, 321);
             tableLayoutPanel.TabIndex = 0;
-            // 
-            // pictureBoxErrorText
-            // 
-            this.pictureBoxErrorText.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pictureBoxErrorText.BackColor = System.Drawing.Color.Red;
-            this.pictureBoxErrorText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxErrorText.Location = new System.Drawing.Point(175, 195);
-            this.pictureBoxErrorText.Name = "pictureBoxErrorText";
-            this.pictureBoxErrorText.Size = new System.Drawing.Size(24, 24);
-            this.pictureBoxErrorText.TabIndex = 14;
-            this.pictureBoxErrorText.TabStop = false;
-            this.pictureBoxErrorText.Click += new System.EventHandler(this.ButtonColorSelect_Click);
-            // 
-            // labelErrorTextColor
-            // 
-            labelErrorTextColor.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            labelErrorTextColor.AutoSize = true;
-            labelErrorTextColor.Location = new System.Drawing.Point(81, 199);
-            labelErrorTextColor.Name = "labelErrorTextColor";
-            labelErrorTextColor.Size = new System.Drawing.Size(88, 15);
-            labelErrorTextColor.TabIndex = 13;
-            labelErrorTextColor.Text = "Error Text Color";
             // 
             // pictureBoxWarningText
             // 
@@ -249,18 +234,18 @@
             this.pictureBoxBackground.TabStop = false;
             this.pictureBoxBackground.Click += new System.EventHandler(this.ButtonColorSelect_Click);
             // 
-            // buttonOK
+            // buttonSaveSettings
             // 
-            this.buttonOK.Anchor = System.Windows.Forms.AnchorStyles.None;
-            tableLayoutPanel.SetColumnSpan(this.buttonOK, 2);
-            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(92, 255);
-            this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(160, 32);
-            this.buttonOK.TabIndex = 15;
-            this.buttonOK.Text = "Save Settings";
-            this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonOK.Click += new System.EventHandler(this.ButtonSave_Click);
+            this.buttonSaveSettings.Anchor = System.Windows.Forms.AnchorStyles.None;
+            tableLayoutPanel.SetColumnSpan(this.buttonSaveSettings, 2);
+            this.buttonSaveSettings.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonSaveSettings.Location = new System.Drawing.Point(92, 272);
+            this.buttonSaveSettings.Name = "buttonSaveSettings";
+            this.buttonSaveSettings.Size = new System.Drawing.Size(160, 32);
+            this.buttonSaveSettings.TabIndex = 15;
+            this.buttonSaveSettings.Text = "Save Settings";
+            this.buttonSaveSettings.UseVisualStyleBackColor = true;
+            this.buttonSaveSettings.Click += new System.EventHandler(this.ButtonSave_Click);
             // 
             // fontDialog
             // 
@@ -272,9 +257,53 @@
             this.fontDialog.ShowEffects = false;
             this.fontDialog.ShowHelp = true;
             // 
+            // labelErrorTextColor
+            // 
+            labelErrorTextColor.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            labelErrorTextColor.AutoSize = true;
+            labelErrorTextColor.Location = new System.Drawing.Point(81, 200);
+            labelErrorTextColor.Name = "labelErrorTextColor";
+            labelErrorTextColor.Size = new System.Drawing.Size(88, 15);
+            labelErrorTextColor.TabIndex = 16;
+            labelErrorTextColor.Text = "Error Text Color";
+            // 
+            // pictureBoxErrorText
+            // 
+            this.pictureBoxErrorText.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBoxErrorText.BackColor = System.Drawing.Color.Red;
+            this.pictureBoxErrorText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxErrorText.Location = new System.Drawing.Point(175, 196);
+            this.pictureBoxErrorText.Name = "pictureBoxErrorText";
+            this.pictureBoxErrorText.Size = new System.Drawing.Size(24, 24);
+            this.pictureBoxErrorText.TabIndex = 17;
+            this.pictureBoxErrorText.TabStop = false;
+            this.pictureBoxErrorText.Click += new System.EventHandler(this.ButtonColorSelect_Click);
+            // 
+            // labelRawTextColor
+            // 
+            labelRawTextColor.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            labelRawTextColor.AutoSize = true;
+            labelRawTextColor.Location = new System.Drawing.Point(84, 232);
+            labelRawTextColor.Name = "labelRawTextColor";
+            labelRawTextColor.Size = new System.Drawing.Size(85, 15);
+            labelRawTextColor.TabIndex = 18;
+            labelRawTextColor.Text = "Raw Text Color";
+            // 
+            // pictureBoxRawText
+            // 
+            this.pictureBoxRawText.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBoxRawText.BackColor = System.Drawing.Color.Green;
+            this.pictureBoxRawText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxRawText.Location = new System.Drawing.Point(175, 228);
+            this.pictureBoxRawText.Name = "pictureBoxRawText";
+            this.pictureBoxRawText.Size = new System.Drawing.Size(24, 24);
+            this.pictureBoxRawText.TabIndex = 19;
+            this.pictureBoxRawText.TabStop = false;
+            this.pictureBoxRawText.Click += new System.EventHandler(this.ButtonColorSelect_Click);
+            // 
             // SettingsForm
             // 
-            this.AcceptButton = this.buttonOK;
+            this.AcceptButton = this.buttonSaveSettings;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
@@ -291,11 +320,12 @@
             this.TopMost = true;
             tableLayoutPanel.ResumeLayout(false);
             tableLayoutPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxErrorText)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxWarningText)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInfoText)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxNormalText)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBackground)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxErrorText)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRawText)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -310,9 +340,10 @@
         private System.Windows.Forms.PictureBox pictureBoxBackground;
         private System.Windows.Forms.PictureBox pictureBoxNormalText;
         private System.Windows.Forms.PictureBox pictureBoxInfoText;
-        private System.Windows.Forms.PictureBox pictureBoxErrorText;
         private System.Windows.Forms.PictureBox pictureBoxWarningText;
-        private System.Windows.Forms.Button buttonOK;
+        private System.Windows.Forms.Button buttonSaveSettings;
         private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.PictureBox pictureBoxErrorText;
+        private System.Windows.Forms.PictureBox pictureBoxRawText;
     }
 }

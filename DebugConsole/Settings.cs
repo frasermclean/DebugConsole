@@ -30,6 +30,7 @@ namespace DebugConsole
         public Color InfoTextColor { get; set; }
         public Color WarningTextColor { get; set; }
         public Color ErrorTextColor { get; set; }
+        public Color RawTextColor { get; set; }
         #endregion
 
         public Settings()
@@ -44,6 +45,7 @@ namespace DebugConsole
             InfoTextColor = Color.DodgerBlue;
             WarningTextColor = Color.Gold;
             ErrorTextColor = Color.Red;
+            RawTextColor = Color.Green;
         }
 
         public bool Save()
@@ -70,6 +72,7 @@ namespace DebugConsole
                 JObject infoTextColorObject = ConvertColor(InfoTextColor);
                 JObject warningTextColorObject = ConvertColor(WarningTextColor);
                 JObject errorTextColorObject = ConvertColor(ErrorTextColor);
+                JObject rawTextColorObject = ConvertColor(RawTextColor);
 
                 // root object
                 JObject rootObject = new JObject
@@ -81,6 +84,7 @@ namespace DebugConsole
                     ["InfoTextColor"] = infoTextColorObject,
                     ["WarningTextColor"] = warningTextColorObject,
                     ["ErrorTextColor"] = errorTextColorObject,
+                    ["RawTextColor"] = rawTextColorObject,
                 };
                 
                 string jsonString = JsonConvert.SerializeObject(rootObject, settings); // serialize root object
@@ -111,6 +115,7 @@ namespace DebugConsole
                 InfoTextColor = ConvertColor((JObject)obj.SelectToken("InfoTextColor"));
                 WarningTextColor = ConvertColor((JObject)obj.SelectToken("WarningTextColor"));
                 ErrorTextColor = ConvertColor((JObject)obj.SelectToken("ErrorTextColor"));
+                RawTextColor = ConvertColor((JObject)obj.SelectToken("RawTextColor"));
 
                 return true;
             }
