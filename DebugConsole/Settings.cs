@@ -1,12 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Drawing;
+using System.IO;
 
 namespace DebugConsole
 {
@@ -30,6 +26,7 @@ namespace DebugConsole
         public Color InfoTextColor { get; set; }
         public Color WarningTextColor { get; set; }
         public Color ErrorTextColor { get; set; }
+        public Color ExceptionTextColor { get; set; }
         public Color RawTextColor { get; set; }
         #endregion
 
@@ -42,10 +39,11 @@ namespace DebugConsole
             Font = new Font("Segoe UI", 9.0f);
             BackgroundColor = Color.Black;
             NormalTextColor = Color.Silver;
-            InfoTextColor = Color.DodgerBlue;
+            InfoTextColor = Color.Green;
             WarningTextColor = Color.Gold;
             ErrorTextColor = Color.Red;
-            RawTextColor = Color.Green;
+            ExceptionTextColor = Color.Purple;
+            RawTextColor = Color.DodgerBlue;
         }
 
         public bool Save()
@@ -72,6 +70,7 @@ namespace DebugConsole
                 JObject infoTextColorObject = ConvertColor(InfoTextColor);
                 JObject warningTextColorObject = ConvertColor(WarningTextColor);
                 JObject errorTextColorObject = ConvertColor(ErrorTextColor);
+                JObject exceptionTextColorObject = ConvertColor(ErrorTextColor);
                 JObject rawTextColorObject = ConvertColor(RawTextColor);
 
                 // root object
@@ -84,9 +83,10 @@ namespace DebugConsole
                     ["InfoTextColor"] = infoTextColorObject,
                     ["WarningTextColor"] = warningTextColorObject,
                     ["ErrorTextColor"] = errorTextColorObject,
+                    ["ExceptionTextColor"] = exceptionTextColorObject,
                     ["RawTextColor"] = rawTextColorObject,
                 };
-                
+
                 string jsonString = JsonConvert.SerializeObject(rootObject, settings); // serialize root object
                 Directory.CreateDirectory(directoryPath); // make directory if it does not exist
                 File.WriteAllText(filePath, jsonString); // write file
@@ -115,6 +115,7 @@ namespace DebugConsole
                 InfoTextColor = ConvertColor((JObject)obj.SelectToken("InfoTextColor"));
                 WarningTextColor = ConvertColor((JObject)obj.SelectToken("WarningTextColor"));
                 ErrorTextColor = ConvertColor((JObject)obj.SelectToken("ErrorTextColor"));
+                ExceptionTextColor = ConvertColor((JObject)obj.SelectToken("ExceptionTextColor"));
                 RawTextColor = ConvertColor((JObject)obj.SelectToken("RawTextColor"));
 
                 return true;

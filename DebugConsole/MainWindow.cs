@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace DebugConsole
 {
@@ -87,7 +87,7 @@ namespace DebugConsole
                     case MessageType.Info: richTextBoxMain.SelectionColor = settings.InfoTextColor; break;
                     case MessageType.Warning: richTextBoxMain.SelectionColor = settings.WarningTextColor; break;
                     case MessageType.Error: richTextBoxMain.SelectionColor = settings.ErrorTextColor; break;
-                    case MessageType.Exception: richTextBoxMain.SelectionColor = settings.ErrorTextColor; break;
+                    case MessageType.Exception: richTextBoxMain.SelectionColor = settings.ExceptionTextColor; break;
                     case MessageType.Raw: // special case for raw type
                         richTextBoxMain.SelectionColor = settings.RawTextColor;
                         richTextBoxMain.AppendText(message.MessageText);

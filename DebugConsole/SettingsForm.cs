@@ -55,6 +55,8 @@ namespace DebugConsole
                     settings.WarningTextColor = colorDialog.Color;
                 else if (sender == pictureBoxErrorText)
                     settings.ErrorTextColor = colorDialog.Color;
+                else if (sender == pictureBoxExceptionText)
+                    settings.ExceptionTextColor = colorDialog.Color;
                 else if (sender == pictureBoxRawText)
                     settings.RawTextColor = colorDialog.Color;
 
@@ -80,9 +82,8 @@ namespace DebugConsole
             pictureBoxInfoText.BackColor = settings.InfoTextColor;
             pictureBoxWarningText.BackColor = settings.WarningTextColor;
             pictureBoxErrorText.BackColor = settings.ErrorTextColor;
+            pictureBoxExceptionText.BackColor = settings.ExceptionTextColor;
             pictureBoxRawText.BackColor = settings.RawTextColor;
         }
-
-        
     }
 }
