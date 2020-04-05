@@ -19,7 +19,7 @@ namespace DebugConsole
             InitializeComponent();
 
             // settings
-            settings = new Settings();            
+            settings = new Settings();
             settings.EventHandler += Settings_EventHandler;
             settings.Load();
 
@@ -88,6 +88,10 @@ namespace DebugConsole
                     case MessageType.Warning: richTextBoxMain.SelectionColor = settings.WarningTextColor; break;
                     case MessageType.Error: richTextBoxMain.SelectionColor = settings.ErrorTextColor; break;
                     case MessageType.Exception: richTextBoxMain.SelectionColor = settings.ErrorTextColor; break;
+                    case MessageType.Raw: // special case for raw type
+                        richTextBoxMain.SelectionColor = settings.RawTextColor;
+                        richTextBoxMain.AppendText(message.MessageText);
+                        return;
                 }
 
                 // component name
