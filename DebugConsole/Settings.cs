@@ -74,7 +74,7 @@ namespace DebugConsole
                 JObject infoTextColorObject = ConvertColor(InfoTextColor);
                 JObject warningTextColorObject = ConvertColor(WarningTextColor);
                 JObject errorTextColorObject = ConvertColor(ErrorTextColor);
-                JObject exceptionTextColorObject = ConvertColor(ErrorTextColor);
+                JObject exceptionTextColorObject = ConvertColor(ExceptionTextColor);
                 JObject rawTextColorObject = ConvertColor(RawTextColor);
 
                 // root object
