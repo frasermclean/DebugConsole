@@ -58,6 +58,7 @@ namespace DebugConsole
 
         private void Listener_MessageReceivedHandler(object sender, MessageReceivedEventArgs e)
         {
+            messages.Add(e.Message);
             TextBoxAppend(e.Message);
             StatusTextSet("Last message received at: " + e.TimeReceived.ToLongTimeString());
         }
@@ -113,7 +114,7 @@ namespace DebugConsole
 
         private void TextBoxRefresh()
         {
-            richTextBoxMain.Text = string.Empty;
+            richTextBoxMain.Clear();
             richTextBoxMain.Font = settings.Font;
             richTextBoxMain.BackColor = settings.BackgroundColor;
             foreach (Message message in messages)
@@ -177,7 +178,10 @@ namespace DebugConsole
         {
             SettingsForm optionsForm = new SettingsForm(settings);
             if (optionsForm.ShowDialog(this) == DialogResult.OK)
+            {
+                StatusTextSet("Settings saved.");
                 Refresh();
+            }
         }
 
         private void buttonToggleListening_Click(object sender, EventArgs e)
