@@ -19,6 +19,8 @@ namespace DebugConsole
         #region Properties
         public int ListeningPortNumber { get; set; }
         public Font Font { get; set; }
+        public bool DisplayProgramNumber { get; set; }
+        public bool DisplayProgramName { get; set; }
 
         // colors
         public Color BackgroundColor { get; set; }
@@ -37,6 +39,8 @@ namespace DebugConsole
             // set defaults
             ListeningPortNumber = Listener.PortDefault;
             Font = new Font("Segoe UI", 9.0f);
+            DisplayProgramName = false;
+            DisplayProgramNumber = false;
             BackgroundColor = Color.Black;
             NormalTextColor = Color.Silver;
             InfoTextColor = Color.Green;
@@ -78,6 +82,8 @@ namespace DebugConsole
                 {
                     ["ListeningPortNumber"] = ListeningPortNumber,
                     ["Font"] = fontObject,
+                    ["DisplayProgramNumber"] = DisplayProgramNumber,
+                    ["DisplayProgramName"] = DisplayProgramName,
                     ["BackgroundColor"] = backgroundColorObject,
                     ["NormalTextColor"] = normalTextColorObject,
                     ["InfoTextColor"] = infoTextColorObject,
@@ -110,6 +116,8 @@ namespace DebugConsole
                 // parse json
                 ListeningPortNumber = (int)obj.SelectToken("ListeningPortNumber");
                 Font = ConvertFont((JObject)obj.SelectToken("Font"));
+                DisplayProgramNumber = (bool)obj.SelectToken("DisplayProgramNumber");
+                DisplayProgramName = (bool)obj.SelectToken("DisplayProgramName");
                 BackgroundColor = ConvertColor((JObject)obj.SelectToken("BackgroundColor"));
                 NormalTextColor = ConvertColor((JObject)obj.SelectToken("NormalTextColor"));
                 InfoTextColor = ConvertColor((JObject)obj.SelectToken("InfoTextColor"));
