@@ -98,9 +98,9 @@ namespace DebugConsole
                 // message prefix
                 richTextBoxMain.SelectionFont = new Font(settings.Font, FontStyle.Bold);
                 var prefix = new StringBuilder("[");
-                if (message.ProgramNumber > 0)
+                if (settings.DisplayProgramNumber && message.ProgramNumber > 0)
                     prefix.Append($"{message.ProgramNumber}-");
-                if (message.ProgramName != string.Empty)
+                if (settings.DisplayProgramName && message.ProgramName != string.Empty)
                     prefix.Append($"{message.ProgramName}.");
                 prefix.Append($"{message.ComponentName}] ");
                 richTextBoxMain.AppendText(prefix.ToString());
