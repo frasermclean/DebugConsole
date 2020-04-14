@@ -6,12 +6,26 @@ namespace DebugConsole
 {
     public class Message
     {
+        public string ProgramName { get; private set; }
+        public int ProgramNumber { get; private set; }
         public MessageType MessageType { get; set; }
         public string ComponentName { get; set; }
         public string MessageText { get; set; }
 
         public Message(MessageType messageType, string componentName, string messageText)
         {
+            Initialize(String.Empty, 0, messageType, componentName, messageText);
+        }
+
+        public Message(string programName, int programNumber, MessageType messageType, string componentName, string messageText)
+        {
+            Initialize(programName, programNumber, messageType, componentName, messageText);
+        }
+
+        private void Initialize(string programName, int programNumber, MessageType messageType, string componentName, string messageText)
+        {
+            ProgramName = programName;
+            ProgramNumber = programNumber;
             MessageType = messageType;
             ComponentName = componentName;
             MessageText = messageText;
@@ -47,15 +61,30 @@ namespace DebugConsole
             {
                 JObject obj = (JObject)JsonConvert.DeserializeObject(jsonString);
 
-                // parse json
+                // program name
+                var programName = string.Empty;
+                var programNameToken = obj.SelectToken("ProgramName");
+                if (programNameToken != null)
+                    programName = (string)programNameToken;
+
+                // program number
+                int programNumber = 0;
+                var programNumberToken = obj.SelectToken("ProgramNumber");
+                if (programNumberToken != null)
+                    programNumber = (int)programNumberToken;
+
+                // message type
                 var messageTypeInt = (int)obj.SelectToken("MessageType");
                 MessageType messageType = (MessageType)messageTypeInt;
+
+                // component name
                 var componentName = (string)obj.SelectToken("ComponentName");
+
+                // message text
                 var messageText = (string)obj.SelectToken("MessageText");
 
-                Message dcm = new Message(messageType, componentName, messageText);
-
-                return dcm;
+                // return new message object
+                return new Message(programName, programNumber, messageType, componentName, messageText);
             }
             catch (Exception ex)
             {

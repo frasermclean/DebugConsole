@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Text;
 
 namespace DebugConsole
 {
@@ -94,9 +95,15 @@ namespace DebugConsole
                         return;
                 }
 
-                // component name
+                // message prefix
                 richTextBoxMain.SelectionFont = new Font(settings.Font, FontStyle.Bold);
-                richTextBoxMain.AppendText(string.Format("[{0}] ", message.ComponentName));
+                var prefix = new StringBuilder("[");
+                if (message.ProgramNumber > 0)
+                    prefix.Append($"{message.ProgramNumber}-");
+                if (message.ProgramName != string.Empty)
+                    prefix.Append($"{message.ProgramName}.");
+                prefix.Append($"{message.ComponentName}] ");
+                richTextBoxMain.AppendText(prefix.ToString());
 
                 // message text
                 richTextBoxMain.SelectionFont = new Font(settings.Font, FontStyle.Regular);
