@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Text;
 
 namespace DebugConsole
 {
@@ -57,6 +58,7 @@ namespace DebugConsole
 
         private void Listener_MessageReceivedHandler(object sender, MessageReceivedEventArgs e)
         {
+            messages.Add(e.Message);
             TextBoxAppend(e.Message);
             StatusTextSet("Last message received at: " + e.TimeReceived.ToLongTimeString());
         }
@@ -94,9 +96,15 @@ namespace DebugConsole
                         return;
                 }
 
-                // component name
+                // message prefix
                 richTextBoxMain.SelectionFont = new Font(settings.Font, FontStyle.Bold);
-                richTextBoxMain.AppendText(string.Format("[{0}] ", message.ComponentName));
+                var prefix = new StringBuilder("[");
+                if (settings.DisplayProgramNumber && message.ProgramNumber > 0)
+                    prefix.Append($"{message.ProgramNumber}-");
+                if (settings.DisplayProgramName && message.ProgramName != string.Empty)
+                    prefix.Append($"{message.ProgramName}.");
+                prefix.Append($"{message.ComponentName}] ");
+                richTextBoxMain.AppendText(prefix.ToString());
 
                 // message text
                 richTextBoxMain.SelectionFont = new Font(settings.Font, FontStyle.Regular);
@@ -106,7 +114,7 @@ namespace DebugConsole
 
         private void TextBoxRefresh()
         {
-            richTextBoxMain.Text = string.Empty;
+            richTextBoxMain.Clear();
             richTextBoxMain.Font = settings.Font;
             richTextBoxMain.BackColor = settings.BackgroundColor;
             foreach (Message message in messages)
@@ -170,7 +178,10 @@ namespace DebugConsole
         {
             SettingsForm optionsForm = new SettingsForm(settings);
             if (optionsForm.ShowDialog(this) == DialogResult.OK)
+            {
+                StatusTextSet("Settings saved.");
                 Refresh();
+            }
         }
 
         private void buttonToggleListening_Click(object sender, EventArgs e)

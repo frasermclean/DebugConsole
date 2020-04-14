@@ -84,6 +84,17 @@ namespace DebugConsole
             pictureBoxErrorText.BackColor = settings.ErrorTextColor;
             pictureBoxExceptionText.BackColor = settings.ExceptionTextColor;
             pictureBoxRawText.BackColor = settings.RawTextColor;
+            checkBoxProgramName.Checked = settings.DisplayProgramName;
+            checkBoxProgramNumber.Checked = settings.DisplayProgramNumber;
+        }
+
+        private void Checkbox_Click(object sender, EventArgs e)
+        {
+            if (sender == checkBoxProgramNumber)
+                settings.DisplayProgramNumber = checkBoxProgramNumber.Checked;
+            else if (sender == checkBoxProgramName)
+                settings.DisplayProgramName = checkBoxProgramName.Checked;
         }
     }
 }
+
